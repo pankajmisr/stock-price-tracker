@@ -4,7 +4,10 @@ const Header = () => {
   return (
     <div className="header">
       <h1>Stock Price Tracker</h1>
-      <p>Track your favorite stocks with alerts for significant price changes</p>
+      <p>Track real-time stock prices from Yahoo Finance with alerts for significant changes</p>
+      <div className="data-source">
+        Powered by Yahoo Finance API data
+      </div>
     </div>
   );
 };
