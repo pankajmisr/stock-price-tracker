@@ -36,6 +36,43 @@
   margin-bottom: 8px;
 }
 
+/* New styles for severe drops section */
+.severe-drops {
+  background-color: #ffebee;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+  border: 2px solid #b71c1c;
+  box-shadow: 0 0 10px rgba(183, 28, 28, 0.3);
+  animation: pulse-border 2s infinite;
+}
+
+.severe-drops h3 {
+  margin-top: 0;
+  color: #b71c1c;
+  font-weight: bold;
+}
+
+.severe-drops ul {
+  padding-left: 20px;
+}
+
+.severe-drops li {
+  margin-bottom: 8px;
+}
+
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(183, 28, 28, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(183, 28, 28, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(183, 28, 28, 0);
+  }
+}
+
 .loading {
   display: flex;
   justify-content: center;
