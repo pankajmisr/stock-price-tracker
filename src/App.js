@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import StockGrid from './components/StockGrid';
 import stockData from './data/stockData';
+import './App.css';
 
 function App() {
   const [stocks, setStocks] = useState([]);
