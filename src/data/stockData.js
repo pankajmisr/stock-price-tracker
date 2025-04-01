@@ -113,6 +113,25 @@ const stockData = [
       { date: '2025-03-09', price: 282.20 },
       { date: '2025-03-10', price: 280.25 },
     ]
+  },
+  {
+    id: 7,
+    symbol: 'NFLX',
+    name: 'Netflix, Inc.',
+    initialPrice: 550.00,
+    currentPrice: 380.75,
+    history: [
+      { date: '2025-03-01', price: 550.00 },
+      { date: '2025-03-02', price: 535.30 },
+      { date: '2025-03-03', price: 510.75 },
+      { date: '2025-03-04', price: 490.20 },
+      { date: '2025-03-05', price: 470.80 },
+      { date: '2025-03-06', price: 445.25 },
+      { date: '2025-03-07', price: 430.40 },
+      { date: '2025-03-08', price: 410.55 },
+      { date: '2025-03-09', price: 395.20 },
+      { date: '2025-03-10', price: 380.75 },
+    ]
   }
 ];
 
