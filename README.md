@@ -1,6 +1,6 @@
 # Stock Price Tracker
 
-A React application that tracks stock prices in real-time from Yahoo Finance and provides visual alerts when a stock rises above 10% or falls below 10% of its initial value, with special warnings for severe drops of 30% or more.
+A React application that tracks stock prices in real-time from Yahoo Finance and provides visual alerts when a stock rises above 5% or falls below 5% of its initial value, with special warnings for severe drops of 30% or more.
 
 ## Features
 
@@ -8,7 +8,7 @@ A React application that tracks stock prices in real-time from Yahoo Finance and
 - Visual indicators for significant price changes:
   - Green for positive changes
   - Red for negative changes
-  - Special alert badges for changes of 10% or more
+  - Special alert badges for changes of 5% or more
   - Critical warning alerts for drops of 30% or more
 - Responsive dashboard overview of multiple stocks
 - Detailed view for individual stock performance

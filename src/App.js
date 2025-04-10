@@ -76,10 +76,10 @@ function App() {
     ((stock.currentPrice - stock.initialPrice) / stock.initialPrice) * 100 <= -30
   );
 
-  // Get stocks with significant changes (10% or more but less than 30%)
+  // Get stocks with significant changes (5% or more but less than 30%)
   const significantChangeStocks = stocks.filter(stock => {
     const percentChange = ((stock.currentPrice - stock.initialPrice) / stock.initialPrice) * 100;
-    return Math.abs(percentChange) >= 10 && percentChange > -30;
+    return Math.abs(percentChange) >= 5 && percentChange > -30;
   });
 
   return (
@@ -134,7 +134,7 @@ function App() {
             <div className="dashboard-summary">
               <h2>Real-Time Stock Dashboard</h2>
               <p>
-                Tracking {stocks.length} stocks with alerts for +/-10% changes and severe drops (30%+)
+                Tracking {stocks.length} stocks with alerts for +/-5% changes and severe drops (30%+)
               </p>
               <div className="tracked-symbols">
                 <h3>Tracked Stocks:</h3>
@@ -182,7 +182,7 @@ function App() {
                       return (
                         <li key={stock.id}>
                           {stock.symbol}: {
-                            percentChange >= 10 
+                            percentChange >= 5 
                             ? '🔼 Up' 
                             : '🔽 Down'
                           } by {
