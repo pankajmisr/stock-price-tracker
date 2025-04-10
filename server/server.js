@@ -26,6 +26,10 @@ const YAHOO_FINANCE_BASE_URL = 'https://query1.finance.yahoo.com/v8/finance';
 app.get('/api/stock/:symbol', async (req, res) => {
   try {
     const { symbol } = req.params;
+    if (!symbol) {
+      return res.status(400).json({ error: 'Symbol parameter is required' });
+    }
+
     const cacheKey = `stock-${symbol}`;
     
     // Check cache first
@@ -39,8 +43,8 @@ app.get('/api/stock/:symbol', async (req, res) => {
       `${YAHOO_FINANCE_BASE_URL}/chart/${symbol}`,
       {
         params: {
-          range: '1mo', // Get 1 month of data
-          interval: '1d', // Daily intervals
+          range: '1mo',
+          interval: '1d',
           includePrePost: true,
           events: 'div,split'
         },
@@ -49,38 +53,45 @@ app.get('/api/stock/:symbol', async (req, res) => {
         }
       }
     );
-    
-    // Extract the relevant data
+
+    if (!response.data || !response.data.chart || !response.data.chart.result || !response.data.chart.result[0]) {
+      return res.status(500).json({ error: 'Invalid data received from API' });
+    }
+
     const stockData = response.data.chart.result[0];
-    const meta = stockData.meta;
-    const timestamps = stockData.timestamp;
-    const quotes = stockData.indicators.quote[0];
-    
+    const meta = stockData.meta || {};
+    const timestamps = stockData.timestamp || [];
+    const quotes = stockData.indicators?.quote?.[0] || {};
+
+    if (!timestamps.length || !quotes.open || !quotes.close) {
+      return res.status(500).json({ error: 'Incomplete stock data received' });
+    }
+
     // Format the data
     const prices = timestamps.map((timestamp, index) => ({
       date: new Date(timestamp * 1000).toISOString().split('T')[0],
-      open: quotes.open[index],
-      high: quotes.high[index],
-      low: quotes.low[index],
-      close: quotes.close[index],
-      volume: quotes.volume[index]
+      open: quotes.open[index] || null,
+      high: quotes.high[index] || null,
+      low: quotes.low[index] || null,
+      close: quotes.close[index] || null,
+      volume: quotes.volume[index] || null
     }));
-    
+
     // Create the stock object
     const stock = {
       id: symbol,
       symbol: symbol,
       name: meta.instrumentInfo ? meta.instrumentInfo.shortName : symbol,
-      currency: meta.currency,
-      exchange: meta.exchangeName,
-      initialPrice: prices[0].close,
-      currentPrice: meta.regularMarketPrice,
-      previousClose: meta.previousClose,
-      dayHigh: meta.dayHigh,
-      dayLow: meta.dayLow,
+      currency: meta.currency || 'N/A',
+      exchange: meta.exchangeName || 'N/A',
+      initialPrice: prices[0]?.close || null,
+      currentPrice: meta.regularMarketPrice || null,
+      previousClose: meta.previousClose || null,
+      dayHigh: meta.dayHigh || null,
+      dayLow: meta.dayLow || null,
       history: prices
     };
-    
+
     // Store in cache
     stockCache.set(cacheKey, stock);
     
@@ -90,6 +101,7 @@ app.get('/api/stock/:symbol', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch stock data' });
   }
 });
+
 
 /**
  * Get multiple stocks at once
