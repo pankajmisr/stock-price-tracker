@@ -4,7 +4,7 @@ const StockCard = ({ stock }) => {
   // Calculate percentage change
   const percentChange = ((stock.currentPrice - stock.initialPrice) / stock.initialPrice) * 100;
   const isPositive = percentChange > 0;
-  const isSignificantChange = Math.abs(percentChange) >= 10;
+  const isSignificantChange = Math.abs(percentChange) >= 5;
   // Check for severe drop (30% or more)
   const isSevereDrop = percentChange <= -30;
 
@@ -61,10 +61,10 @@ const StockCard = ({ stock }) => {
           ⚠️ CRITICAL: Stock has dropped by 30% or more!
         </div>
       ) : isSignificantChange && (
-        <div className={`alert ${percentChange <= -10 ? 'danger' : ''}`}>
-          {percentChange >= 10 
-            ? '🔼 Stock has risen by 10% or more!' 
-            : '🔽 Stock has fallen by 10% or more!'}
+        <div className={`alert ${percentChange <= -5 ? 'danger' : ''}`}>
+          {percentChange >= 5 
+            ? '🔼 Stock has risen by 5% or more!' 
+            : '🔽 Stock has fallen by 5% or more!'}
         </div>
       )}
       
